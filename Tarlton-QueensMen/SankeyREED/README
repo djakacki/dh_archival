@@ -1,0 +1,8 @@
+README
+
+In index.html (line 40) the browser window is set to a height of 5000 in order to get any kind of visual representation.
+
+In index.html (line 63) the .csv file being called is "Geog_weighted.csv". you can change it to whatever you want as long as it's in the same directory as the other files:
+d3.csv("Geog_weighted.csv", function(error, data) {
+
+
