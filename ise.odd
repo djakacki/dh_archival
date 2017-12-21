@@ -1,0 +1,1600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://teijenkins.hcmc.uvic.ca/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://teijenkins.hcmc.uvic.ca/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     version="5.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI Customization for the Internet Shakespeare Editions</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>See publication state for the Internet Shakespeare Editions</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born digital.</p>
+         </sourceDesc>
+      </fileDesc>
+      <revisionDesc>
+         <change who="pers:TAKE1" when="2017-08-24">Added custom Xinclude element and changed content module of header elements.</change>
+         <change who="pers:TAKE1" when="2017-06-28">Finished alpha version of the ODD.</change>
+      </revisionDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <schemaSpec ident="ise_all" start="TEI">
+
+            <!--MODULE: ANALYSIS-->
+            <moduleRef key="analysis" include="pc span spanGrp"/>
+            <classSpec ident="att.global.analytic"
+                       module="analysis"
+                       mode="delete"
+                       type="atts"/>
+            <elementSpec ident="span" module="analysis" mode="change">
+               <attList>
+                  <attDef ident="cert" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="style" mode="delete"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="target" mode="delete"/>
+                  <!--All spans need a from-->
+                  <attDef ident="from" mode="change" usage="req"/>
+               </attList>
+               <remarks>
+                  <p>This element is only used in the context of a document in the idt:idtApparatus category.</p>
+               </remarks>
+            </elementSpec>
+
+            <!--MODULE: CORE-->
+            <!-- biblStruct, imprint, monogr, pubPlace used by facsimiles -->
+            <moduleRef key="core"
+                       include="abbr address author bibl biblStruct cb choice cit corr date desc editor emph expan foreign gap gloss graphic head hi imprint item l label lb lg list listBibl media mentioned milestone monogr name note p pb ptr publisher pubPlace q quote ref reg relatedItem resp respStmt rs sic soCalled sp speaker stage term title"/>
+            
+            <elementSpec ident="bibl" module="core" mode="change">
+               <attList>
+                  <!--Deleting most attributes from bibl-->
+                  <attDef ident="cert" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/> 
+                 <attDef ident="style" mode="delete"/>
+                  <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="synch" mode="delete"/>
+                  <attDef ident="sameAs" mode="delete"/>
+                  <attDef ident="copyOf" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="exclude" mode="delete"/>
+                  <attDef ident="select" mode="delete"/>
+                  <attDef ident="ana" mode="delete"/>
+                  <attDef ident="change" mode="delete"/>
+                  <attDef ident="source" mode="delete"/>
+                  <attDef ident="default" mode="delete"/>
+                  <attDef ident="type" mode="delete"/>
+                  <attDef ident="subtype" mode="delete"/>
+                  <attDef ident="sortKey" mode="delete"/>
+                  <attDef ident="status" mode="delete"/>
+               </attList>
+            </elementSpec>
+            <elementSpec ident="note" module="core" mode="change">
+               <attList>
+                  <attDef ident="anchored" mode="delete"/>
+                  <attDef ident="targetEnd" mode="delete"/>
+                  <attDef ident="subtype" mode="delete"/>
+                  <attDef ident="type" usage="opt" mode="change">
+                     <valList type="closed" mode="change">
+                        <valItem ident="performance" mode="add">
+                           <gloss>Performance note</gloss>
+                           <desc>describes performance or production choices</desc>
+                        </valItem>
+                        <valItem ident="pedagogical" mode="add">
+                           <gloss>Pedagogical note</gloss>
+                           <desc>provides materials and guidance for teaching in a classroom setting</desc>
+                        </valItem>
+                        <valItem ident="textual" mode="add">
+                           <gloss>Textual note</gloss>
+                           <desc>explains textual decisions made by the editor (often paired with a collation)</desc>
+                        </valItem>
+                        <valItem ident="commentary" mode="add">
+                           <gloss>Commentary</gloss>
+                           <desc>discussion of the meaning of the text, roughly equivalent to current annotation in editions like the Arden or New Cambridge.</desc>
+                        </valItem>
+                        <valItem ident="marginal" mode="add">
+                           <gloss>Marginal</gloss>
+                           <desc>a marginal note. For use in primary texts only.</desc>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+            </elementSpec>
+            
+            <elementSpec ident="relatedItem" module="core" mode="change">
+               <desc>identifies the document that these notes and apparatus apply.</desc>
+               <attList>
+                  <attDef ident="cert" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="n" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="style" mode="delete"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="type" mode="delete"/>
+                  <attDef ident="source" mode="delete"/>
+                  <attDef ident="subtype" mode="delete"/>
+                  <attDef ident="target" mode="change" usage="req"/>
+               </attList>
+               <remarks>
+                  <p>This element is only used in the context of a document in the idt:idtApparatus category.</p>
+               </remarks>
+            </elementSpec>
+
+            <elementSpec ident="resp" module="core" mode="change">
+               <attList>
+                  <attDef ident="n" mode="delete"/>
+                  <attDef ident="style" mode="delete"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="ref" mode="change" usage="req">
+                     <valList type="closed" mode="change"><!--These values are generated from the taxonomies document.-->
+                        <valItem ident="resp:anl" mode="add">
+                           <gloss>Analyst</gloss>
+                           <desc>A person or organization that reviews, examines, and
+                        interprets data or information in a specific area.</desc>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:aut" mode="add">
+                           <gloss>Author</gloss>
+                           <desc>A person, family, or organization responsible for creating a
+                        work that is primarily textual in content, regardless of media type (e.g.,
+                        printed text, spoken word, electronic text, tactile text) or genre (e.g.,
+                        poems, novels, screenplays, blogs). Use also for persons, etc., creating a
+                        new work by paraphrasing, rewriting, or adapting works by another creator
+                        such that the modification has substantially changed the nature and content
+                        of the original or changed the medium of expression.</desc>
+                           <desc>ISE/QME/DRE use the term author in two contexts: (1) to
+                        indicate the author of a primary work or document (such as Hamlet), and (2)
+                        to indicate the author of a secondary text (such as the Critical
+                        Introduction to Hamlet, by David Bevington).</desc>
+                        </valItem>
+                        <valItem ident="resp:aut_ann" mode="add">
+                           <gloss>Author of Annotations</gloss>
+                           <desc>A person who makes manuscript annotations on an item.</desc>
+                           <desc>ISE/QME/DRE use the term author of annotations for a person
+                        who writes annotions for a text.</desc>
+                        </valItem>
+                        <valItem ident="resp:aut_attrib" mode="add">
+                           <gloss>Supposed Author</gloss>
+                           <desc>An author, artist, etc., relating him/her to a resource for
+                        which there is or once was substantial authority for designating that person
+                        as author, creator, etc. of the work.</desc>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:aut_col" mode="add">
+                           <gloss>Collator</gloss>
+                           <desc>A person who compiles the vertical collations for a text.</desc>
+                        </valItem>
+                        <valItem ident="resp:bsl" mode="add">
+                           <gloss>Bookseller</gloss>
+                           <desc>A person or organization who makes books and other
+                        bibliographic materials available for purchase. Interest in the materials is
+                        primarily lucrative.</desc>
+                           <desc>ISE/QME/DRE use the term bookseller only in the metadata for
+                        publications and copies. In cases where a publication was issued with
+                        variant title pages, list all booksellers in all variant states of the title
+                        page.</desc>
+                        </valItem>
+                        <valItem ident="resp:cph" mode="add">
+                           <gloss>Copyright holder</gloss>
+                           <desc>A person or organization to whom copy and legal rights have
+                        been granted or transferred for the intellectual content of a work. The
+                        copyright holder, although not necessarily the creator of the work, usually
+                        has the exclusive right to benefit financially from the sale and use of the
+                        work to which the associated copyright protection applies.</desc>
+                           <desc>Normally the editor is the copyright holder for an
+                        ISE/QME/DRE edition.</desc>
+                        </valItem>
+                        <valItem ident="resp:edt" mode="add">
+                           <gloss>Editor</gloss>
+                           <desc>A person, family, or organization contributing to a resource
+                        by revising or elucidating the content, e.g., adding an introduction, notes,
+                        or other critical matter. An editor may also prepare a resource for
+                        production, publication, or distribution. For major revisions, adaptations,
+                        etc., that substantially change the nature and content of the original work,
+                        resulting in a new work, see author.</desc>
+                           <desc>ISE/QME/DRE use the general term editor only in edition
+                        metadata and only to indicate when a person is responsible for editing all
+                        parts of an edition. Otherwise, use the more granular terms to describe the
+                        precise nature of the editorial role.</desc>
+                        </valItem>
+                        <valItem ident="resp:edt_assoccoord" mode="add">
+                           <gloss>Associate Coordinating Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_assoctext" mode="add">
+                           <gloss>Associate Textual Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_asstcoord" mode="add">
+                           <gloss>Assistant Coordinating Editor</gloss>
+                           <desc>The term assistant coordinating editor appears in the
+                        metadata for documents produced before 2017. From 2017 on, this term is
+                        reserved for project-level credits.</desc>
+                        </valItem>
+                        <valItem ident="resp:edt_comp" mode="add">
+                           <gloss>Compiler</gloss>
+                           <desc>A person, family, or organization responsible for creating a
+                        new work (e.g., a bibliography, a directory) through the act of compilation,
+                        e.g., selecting, arranging, aggregating, and editing data, information,
+                        etc.</desc>
+                           <desc>ISE/QME/DRE use the term compiler for the person who chooses
+                        and aggregates the resources included in an edition, if those resources are
+                        not all by the editor of the edition. The compiler and the editor may be the
+                        same person; in that case, the person needs two responsibility
+                        statements.</desc>
+                        </valItem>
+                        <valItem ident="resp:edt_cont" mode="add">
+                           <gloss>Contributing Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_coord" mode="add">
+                           <gloss>Coordinating Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_gen" mode="add">
+                           <gloss>General Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_gentext" mode="add">
+                           <gloss>General Textual Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_mrk" mode="add">
+                           <gloss>Markup Editor</gloss>
+                           <desc>A person or organization performing the coding of SGML, HTML,
+                        or XML markup of metadata, text, etc.</desc>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_perf" mode="add">
+                           <gloss>Performance Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:edt_text" mode="add">
+                           <gloss>Textual Editor</gloss>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:own" mode="add">
+                           <gloss>Owner</gloss>
+                           <desc>A person, family, or organization that currently owns an item
+                        or collection, i.e.has legal possession of a resource.</desc>
+                           <desc>ISE/QME/DRE use the term owner for the person, family, or
+                        library that owns the physical copy of an artifact reproduced in facsimile
+                        on the platform. The owner is often but not necessarily the copyright
+                        holder.</desc>
+                        </valItem>
+                        <valItem ident="resp:pdr" mode="add">
+                           <gloss>Project Director</gloss>
+                           <desc>A person or organization with primary responsibility for all
+                        essential aspects of a project, has overall responsibility for managing
+                        projects, or provides overall direction to a project manager.</desc>
+                           <desc>ISE/QME/DRE uses the term project director for the person who
+                        direct a discrete project published on the ISE platform.</desc>
+                        </valItem>
+                        <valItem ident="resp:pfr" mode="add">
+                           <gloss>Proofreader</gloss>
+                           <desc>A person who corrects printed matter.</desc>
+                           <desc>ISE/QME/DRE use the term proofreader for the person
+                        who</desc>
+                        </valItem>
+                        <valItem ident="resp:ptr" mode="add">
+                           <gloss>Printer</gloss>
+                           <desc>A person, family, or organization involved in manufacturing a
+                        manifestation of printed text, notated music, etc., from type or plates,
+                        such as a book, newspaper, magazine, broadside, score, etc.</desc>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:rtm" mode="add">
+                           <gloss>Research Team Member</gloss>
+                           <desc>A person who participated in a research project but whose
+                        role did not involve direction or management of it.</desc>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:rtm_ra" mode="add">
+                           <gloss>Editorial Research Assistant</gloss>
+                           <desc>A person who participated in a research project but whose
+                        role did not involve direction or management of it</desc>
+                           <desc>Legacy term. Use rtm or appropriate role from 2017
+                        on.</desc>
+                        </valItem>
+                        <valItem ident="resp:trl" mode="add">
+                           <gloss>Translator</gloss>
+                           <desc>A person or organization who renders a text from one language
+                        into another, or from an older form of a language into the modern
+                        form.</desc>
+                           <desc/>
+                        </valItem>
+                        <valItem ident="resp:vet" mode="add">
+                           <gloss>Peer Reviewer</gloss>
+                           <desc>ISE/QME/DRE use the term peer reviewer for a person who
+                        reviews a transcription, critical materials, dataset, and/or some or all
+                        components of an edition.</desc>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+            </elementSpec>
+            
+            <elementSpec ident="stage" mode="change" module="core">
+               <attList>
+                  <attDef ident="type" mode="change">
+                     <!--Put these in a taxonomy-->
+                     <valList type="closed" mode="replace">
+                        <valItem ident="setting">
+                           <desc>describes a setting.</desc>
+                        </valItem>
+                        <valItem ident="entrance">
+                           <desc>describes an entrance.</desc>
+                        </valItem>
+                        <valItem ident="exit">
+                           <desc>describes an exit.</desc>
+                        </valItem>
+                        <valItem ident="business">
+                           <desc>describes stage business.</desc>
+                        </valItem>
+                        <valItem ident="delivery">
+                           <desc>describes how a character speaks.</desc>
+                        </valItem>
+                        <valItem ident="sound">
+                           <desc>describes a sound.</desc>
+                        </valItem>
+                        <valItem ident="location">
+                           <desc>describes a location.</desc>
+                        </valItem>
+                        <valItem ident="location">
+                           <desc>describes a location.</desc>
+                        </valItem>
+                        <valItem ident="uncertain">
+                           <desc>OLD IML VALUE TO BE REMOVED OR REPLACED.</desc>
+                        </valItem>
+                        <valItem ident="optional">
+                           <desc>OLD IML VALUE TO BE REMOVED OR REPLACED.</desc>
+                        </valItem>
+                        <!-- FIXME: remove once all current uses have been changed -->
+                        <valItem ident="other">
+                           <desc>DO NOT USE</desc>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+            </elementSpec>
+
+            <elementSpec ident="titleStmt" mode="change" module="core">
+               <content>
+                  <!--TitleStmts need titles and respStmts-->
+                  <elementRef key="title" minOccurs="1" maxOccurs="unbounded"/>
+                  <elementRef key="respStmt" minOccurs="1" maxOccurs="unbounded"/>
+               </content>
+            </elementSpec>
+            
+            <elementSpec ident="respStmt" mode="change" module="core">
+               <content>
+                  <!--Each respStmt contains one resp and one name-->
+                  <elementRef key="resp" minOccurs="1" maxOccurs="1"/>
+                  <elementRef key="name" minOccurs="1" maxOccurs="1"/>
+               </content>
+               <remarks>
+                  <p>Specifically used within the tei:titleStmt to link to contributors from our personography.</p>
+               </remarks>
+            </elementSpec>
+            
+            
+            <!--MODULE: CORPUS-->
+            <moduleRef key="corpus" include="particDesc"/>
+
+            <!--MODULE: DRAMA-->
+            <moduleRef key="drama" include="castList"/>
+
+            <!--MODULE: FIGURES-->
+            <moduleRef key="figures" include="cell figDesc figure row table"/>
+
+            <!--MODULE: GAIJI-->
+            <moduleRef key="gaiji"
+                       include="char charDecl charName charProp g glyph glyphName localName mapping"/>
+
+            <!--To be changed in processing-->
+            <elementSpec ident="g" mode="change">
+               <attList>
+                  <attDef ident="n" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="change" mode="delete"/>
+                  <attDef ident="type" mode="delete"/>
+                  <attDef ident="subtype" mode="delete"/>
+                  <attDef ident="ref" mode="change" usage="req">
+                     <valList type="closed" mode="change"><!--These values are generated from the taxonomies document.-->
+                        <valItem ident="g:UNKNOWN" mode="add">
+                           <gloss>UNKNOWN(�)</gloss>
+                           <desc>UNKNOWN (�) (U+FFFD)</desc>
+                        </valItem>
+                        <valItem ident="g:VV" mode="add">
+                           <gloss>UPPERCASE DOUBLE V FOR W(W)</gloss>
+                           <desc>UPPERCASE DOUBLE V FOR W (W) (VV) ({VV}) ({W})</desc>
+                        </valItem>
+                        <valItem ident="g:amacron" mode="add">
+                           <gloss>LATIN SMALL LETTER A WITH MACRON(ā)</gloss>
+                           <desc>LATIN SMALL LETTER A WITH MACRON (a[nm]) (ā) ({_a}) (U+0101)</desc>
+                        </valItem>
+                        <valItem ident="g:atilde" mode="add">
+                           <gloss>LATIN SMALL LETTER A WITH TILDE(ã)</gloss>
+                           <desc>LATIN SMALL LETTER A WITH TILDE (a[nm]) (ã) ({~a}) (U+00E3)</desc>
+                        </valItem>
+                        <valItem ident="g:emacron" mode="add">
+                           <gloss>LATIN SMALL LETTER E WITH MACRON(ē)</gloss>
+                           <desc>LATIN SMALL LETTER E WITH MACRON (e[nm]) (ē) ({_e}) (U+0113)</desc>
+                        </valItem>
+                        <valItem ident="g:eth" mode="add">
+                           <gloss>LATIN SMALL LETTER ETH(ð)</gloss>
+                           <desc>LATIN SMALL LETTER ETH (th) (ð) (U+00F0)</desc>
+                        </valItem>
+                        <valItem ident="g:etilde" mode="add">
+                           <gloss>LATIN SMALL LETTER E WITH TILDE(ẽ)</gloss>
+                           <desc>LATIN SMALL LETTER E WITH TILDE (e[nm]) (ẽ) ({~e}) (U+1EBD)</desc>
+                        </valItem>
+                        <valItem ident="g:imacron" mode="add">
+                           <gloss>LATIN SMALL LETTER I WITH MACRON(ī)</gloss>
+                           <desc>LATIN SMALL LETTER I WITH MACRON (i[nm]) (ī) ({_i}) (U+012B)</desc>
+                        </valItem>
+                        <valItem ident="g:itilde" mode="add">
+                           <gloss>LATIN SMALL LETTER I WITH TILDE(ĩ)</gloss>
+                           <desc>LATIN SMALL LETTER I WITH TILDE (i[nm]) (ĩ) ({~i}) (U+0129)</desc>
+                        </valItem>
+                        <valItem ident="g:longS" mode="add">
+                           <gloss>LATIN SMALL LETTER LONG S(ſ)</gloss>
+                           <desc>LATIN SMALL LETTER LONG S (s) (ſ) ({s}) (U+017F)</desc>
+                        </valItem>
+                        <valItem ident="g:ntilde" mode="add">
+                           <gloss>LATIN SMALL LETTER N WITH TILDE(ñ)</gloss>
+                           <desc>LATIN SMALL LETTER N WITH TILDE (ñ) (ñ) ({~n}) (U+00F1)</desc>
+                        </valItem>
+                        <valItem ident="g:omacron" mode="add">
+                           <gloss>LATIN SMALL LETTER O WITH MACRON(ō)</gloss>
+                           <desc>LATIN SMALL LETTER O WITH MACRON (o[nm]) (ō) ({_o}) (U+014D)</desc>
+                        </valItem>
+                        <valItem ident="g:otilde" mode="add">
+                           <gloss>LATIN SMALL LETTER O WITH TILDE(õ)</gloss>
+                           <desc>LATIN SMALL LETTER O WITH TILDE (o[nm]) (õ) ({~o}) (U+00F5)</desc>
+                        </valItem>
+                        <valItem ident="g:rotunda" mode="add">
+                           <gloss>LATIN SMALL LETTER R ROTUNDA(ꝛ)</gloss>
+                           <desc>LATIN SMALL LETTER R ROTUNDA (r) (ꝛ) ({r}) (U+A75A)</desc>
+                        </valItem>
+                        <valItem ident="g:thorn" mode="add">
+                           <gloss>LATIN CAPITAL LETTER THORN(þ)</gloss>
+                           <desc>LATIN CAPITAL LETTER THORN (th) (þ) ({th}) (U+00FE)</desc>
+                        </valItem>
+                        <valItem ident="g:udiaeresis" mode="add">
+                           <gloss>LATIN SMALL LETTER U WITH DIAERESIS(ü)</gloss>
+                           <desc>LATIN SMALL LETTER U WITH DIAERESIS (u) (ü) ({"u}) (U+00FC)</desc>
+                        </valItem>
+                        <valItem ident="g:umacron" mode="add">
+                           <gloss>LATIN SMALL LETTER U WITH MACRON(ū)</gloss>
+                           <desc>LATIN SMALL LETTER U WITH MACRON (u[nm]) (ū) ({_u}) (U+016B)</desc>
+                        </valItem>
+                        <valItem ident="g:utilde" mode="add">
+                           <gloss>LATIN SMALL LETTER U WITH TILDE(ũ)</gloss>
+                           <desc>LATIN SMALL LETTER U WITH TILDE (u[nm]) (ũ) ({~u}) (U+0169)</desc>
+                        </valItem>
+                        <valItem ident="g:vv" mode="add">
+                           <gloss>LOWERCASE DOUBLE V FOR W(w)</gloss>
+                           <desc>LOWERCASE DOUBLE V FOR W (w) (vv) ({vv}) ({w})</desc>
+                        </valItem>
+                        <valItem ident="g:wynn" mode="add">
+                           <gloss>LATIN LETTER WYNN(ƿ)</gloss>
+                           <desc>LATIN LETTER WYNN (w) (ƿ) (U+01BF)</desc>
+                        </valItem>
+                        <valItem ident="g:ymacron" mode="add">
+                           <gloss>LATIN SMALL LETTER Y WITH MACRON(ȳ)</gloss>
+                           <desc>LATIN SMALL LETTER Y WITH MACRON (y[nm]) (ȳ) ({_y}) (U+0233)</desc>
+                        </valItem>
+                        <valItem ident="g:zeroWidthSpace" mode="add">
+                           <gloss>ZERO WIDTH SPACE(​)</gloss>
+                           <desc>ZERO WIDTH SPACE ( ) (​) ({#}) (U+200B)</desc>
+                        </valItem>
+                        <valItem ident="lig:AE" mode="add">
+                           <gloss>LATIN CAPITAL LETTER/LIGATURE AE(AE)</gloss>
+                           <desc>LATIN CAPITAL LETTER/LIGATURE AE (AE) (Æ) ({AE}) (U+00C6)</desc>
+                        </valItem>
+                        <valItem ident="lig:IJ" mode="add">
+                           <gloss>LATIN CAPITAL LIGATURE IJ(IJ)</gloss>
+                           <desc>LATIN CAPITAL LIGATURE IJ (IJ) (Ĳ) ({IJ}) (U+0132)</desc>
+                        </valItem>
+                        <valItem ident="lig:ae" mode="add">
+                           <gloss>LATIN SMALL LETTER/LIGATURE AE(AE)</gloss>
+                           <desc>LATIN SMALL LETTER/LIGATURE AE (AE) (æ) ({ae}) (U+00E6)</desc>
+                        </valItem>
+                        <valItem ident="lig:as" mode="add">
+                           <gloss>LATIN SMALL LIGATURE AS(as)</gloss>
+                           <desc>LATIN SMALL LIGATURE AS (as) ({as})</desc>
+                        </valItem>
+                        <valItem ident="lig:ct" mode="add">
+                           <gloss>LATIN SMALL LIGATURE CT(ct)</gloss>
+                           <desc>LATIN SMALL LIGATURE CT (ct) ({ct})</desc>
+                        </valItem>
+                        <valItem ident="lig:ff" mode="add">
+                           <gloss>LATIN SMALL LIGATURE FF(ff)</gloss>
+                           <desc>LATIN SMALL LIGATURE FF (ff) (ﬀ) ({ff}) (U+FB00)</desc>
+                        </valItem>
+                        <valItem ident="lig:ffi" mode="add">
+                           <gloss>LATIN SMALL LIGATURE FFI(ffi)</gloss>
+                           <desc>LATIN SMALL LIGATURE FFI (ffi) (ﬃ) ({ffi}) (U+FB03)</desc>
+                        </valItem>
+                        <valItem ident="lig:ffl" mode="add">
+                           <gloss>LATIN SMALL LIGATURE FFL(ffl)</gloss>
+                           <desc>LATIN SMALL LIGATURE FFL (ffl) (ﬄ) ({ffl}) (U+FB04)</desc>
+                        </valItem>
+                        <valItem ident="lig:fi" mode="add">
+                           <gloss>LATIN SMALL LIGATURE FI(fi)</gloss>
+                           <desc>LATIN SMALL LIGATURE FI (fi) (ﬁ) ({fi}) (U+FB01)</desc>
+                        </valItem>
+                        <valItem ident="lig:fl" mode="add">
+                           <gloss>LATIN SMALL LIGATURE FL(fl)</gloss>
+                           <desc>LATIN SMALL LIGATURE FL (fl) (ﬂ) ({fl}) (U+FB02)</desc>
+                        </valItem>
+                        <valItem ident="lig:fr" mode="add">
+                           <gloss>LATIN SMALL LIGATURE FR(fr)</gloss>
+                           <desc>LATIN SMALL LIGATURE FR (fr) ({fr})</desc>
+                        </valItem>
+                        <valItem ident="lig:ij" mode="add">
+                           <gloss>LATIN SMALL LIGATURE IJ(ij)</gloss>
+                           <desc>LATIN SMALL LIGATURE IJ (ij) (ĳ) ({ij}) (U+0133)</desc>
+                        </valItem>
+                        <valItem ident="lig:is" mode="add">
+                           <gloss>LATIN SMALL LIGATURE IS(is)</gloss>
+                           <desc>LATIN SMALL LIGATURE IS (is) ({is})</desc>
+                        </valItem>
+                        <valItem ident="lig:ll" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LL(ll)</gloss>
+                           <desc>LATIN SMALL LIGATURE LL (ll) ({ll})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_h" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S H(ſh)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S H (sh) (ſh) ({{s}h})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_i" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S I(ſi)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S I (si) (ſi) ({{s}i})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_l" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S L(ſl)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S L (sl) (ſl) ({{s}l})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_longS" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S LONG S(ſſ)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S LONG S (ss) (ſſ) ({{s}{s}})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_longS_i" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S LONG S I(ſſi)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S LONG S I (ssi) (ſſi) ({{s}{s}i})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_longS_l" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S LONG S L(ſſl)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S LONG S L (ssl) (ſſl) ({{s}{s}l})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_p" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S P(ſp)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S P (sp) (ſp) ({{s}p})</desc>
+                        </valItem>
+                        <valItem ident="lig:longS_t" mode="add">
+                           <gloss>LATIN SMALL LIGATURE LONG S T(ſt)</gloss>
+                           <desc>LATIN SMALL LIGATURE LONG S T (st) (ſt) (ﬅ) ({{s}t}) (U+FB05)</desc>
+                        </valItem>
+                        <valItem ident="lig:oe" mode="add">
+                           <gloss>LATIN SMALL LETTER/LIGATURE OE(AE)</gloss>
+                           <desc>LATIN SMALL LETTER/LIGATURE OE (AE) (œ) ({oe}) (U+1053)</desc>
+                        </valItem>
+                        <valItem ident="lig:os" mode="add">
+                           <gloss>LATIN SMALL LIGATURE OS(os)</gloss>
+                           <desc>LATIN SMALL LIGATURE OS (os) ({os})</desc>
+                        </valItem>
+                        <valItem ident="lig:sl" mode="add">
+                           <gloss>LATIN SMALL LIGATURE SL(sl)</gloss>
+                           <desc>LATIN SMALL LIGATURE SL (sl) ({sl}) (U+FB06)</desc>
+                        </valItem>
+                        <valItem ident="lig:sp" mode="add">
+                           <gloss>LATIN SMALL LIGATURE  SP(sp)</gloss>
+                           <desc>LATIN SMALL LIGATURE  SP (sp) (sp) ({sp})</desc>
+                        </valItem>
+                        <valItem ident="lig:st" mode="add">
+                           <gloss>LATIN SMALL LIGATURE ST(st)</gloss>
+                           <desc>LATIN SMALL LIGATURE ST (st) (ﬆ) ({st}) (U+FB06)</desc>
+                        </valItem>
+                        <valItem ident="lig:sz" mode="add">
+                           <gloss>LATIN SMALL LIGATURE SZ(sz)</gloss>
+                           <desc>LATIN SMALL LIGATURE SZ (sz) ({&amp;szlig})</desc>
+                        </valItem>
+                        <valItem ident="lig:us" mode="add">
+                           <gloss>LATIN SMALL LIGATURE US(us)</gloss>
+                           <desc>LATIN SMALL LIGATURE US (us) ({us})</desc>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+               <remarks>
+                  <p>Glyphs should only be <emph>defined</emph> within taxonomies.xml, and only referenced elsewhere.</p>
+               </remarks>
+            </elementSpec>
+
+            <!--MODULE: HEADER-->
+            <moduleRef key="header"
+                       include="abstract authority availability catDesc catRef category change classDecl distributor edition editionStmt editorialDecl encodingDesc fileDesc idno licence listChange listPrefixDef normalization notesStmt prefixDef profileDesc projectDesc publicationStmt rendition revisionDesc seriesStmt sourceDesc tagsDecl taxonomy teiHeader textClass titleStmt"/>
+            
+            <!--Make all parts of the TEI header mandatory-->
+            <elementSpec ident="teiHeader" module="header" mode="change">
+               <content>
+                  <elementRef key="fileDesc"/>
+                  <elementRef key="profileDesc"/>
+                  <elementRef key="encodingDesc"/>
+                  <elementRef key="revisionDesc"/>
+               </content>
+               <attList>
+                  <attDef ident="type" mode="delete"/>
+                  <attDef ident="n" mode="delete"/>
+                  <attDef ident="style" mode="delete"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="cert" mode="delete"/>
+               </attList>
+               <remarks>
+                  <p>profileDesc is required in order to assign the document to a category.</p>
+               </remarks>
+            </elementSpec>
+            
+            <!--We manipulate a number of header elements to allow the use of @copyOf
+               with content. We use @copyOf similar to an XInclude.-->
+               
+            <elementSpec ident="publicationStmt" module="header" mode="change">
+               <content>
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                     <classRef key="model.publicationStmtPart.agency"/>
+                     <classRef key="model.publicationStmtPart.detail"/>
+                  </alternate>
+               </content>
+               <constraintSpec ident="head-publicationStmt-must-ref"
+                               scheme="schematron"
+                               mode="add">
+                  <desc>All documents should reference the global publication statement.</desc>
+                  <constraint>
+                     <sch:rule context="tei:teiHeader/tei:fileDesc/tei:publicationStmt[not(@xml:id='global_publicationStmt')]">
+                        <sch:assert test="count((@copyOf, @next, @prev)[. = 'global:publicationStmt']) eq 1">
+                           Exactly one of @copyOf, @next, or @prev must reference global:publicationStmt. (<sch:value-of select="ancestor::tei:TEI/@xml:id"/>)
+                        </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <!--I'm not sure this constraint is necessary. Every document needs to have a publicationStmt
+                  that references the global one-->
+               <constraintSpec ident="publicationStmt-nonempty" scheme="schematron" mode="add">
+                  <desc>
+                     <gi>publicationStmt</gi> must have content unless <att>copyOf</att> is used.</desc>
+                  <constraint>
+                     <sch:rule context="tei:publicationStmt[empty(@copyOf)]">
+                        <sch:assert test="element()">
+                           tei:publicationStmt must have children when @copyOf is not used.
+                        </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="publicationStmt-order" scheme="schematron" mode="add">
+                  <desc>Enforce normal TEI model ordering.</desc>
+                  <constraint>
+                     <sch:rule context="tei:publicationStmt[empty(@prev)][element()]">
+                        <sch:assert test="element()[1][self::tei:authority or self::tei:distributor or self::tei:publisher]">
+                           tei:publicationStmt must start with an "agency" element, or specify @prev.
+                        </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <attList>
+                  <attDef ident="copyOf" mode="change">
+                     <valList type="semi" mode="change">
+                        <valItem ident="global:publicationStmt">
+                           <desc>global publication statement</desc>
+                           <gloss>pointer to the global publicationStmt element.</gloss>
+                        </valItem>
+                     </valList>
+                  </attDef>
+                  <attDef ident="prev" mode="change">
+                     <valList type="semi" mode="change">
+                        <valItem ident="global:publicationStmt">
+                           <desc>global publication statement</desc>
+                           <gloss>pointer to the global publicationStmt element.</gloss>
+                        </valItem>
+                     </valList>
+                  </attDef>
+                  <attDef ident="next" mode="change">
+                     <valList type="semi" mode="change">
+                        <valItem ident="global:publicationStmt">
+                           <desc>global publication statement</desc>
+                           <gloss>pointer to the global publicationStmt element.</gloss>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+               
+            </elementSpec>
+            
+            <elementSpec ident="editorialDecl" mode="change" module="header">
+               <content>
+                  <!-- allow empty if @copyOf used -->
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                     <classRef key="model.pLike"/>
+                     <classRef key="model.editorialDeclPart"/>
+                  </alternate>
+               </content>
+               <constraintSpec ident="editorialDecl-nonempty" scheme="schematron" mode="add">
+                  <desc>
+                     <gi>editorialDecl</gi> must have content unless <att>copyOf</att> is used.</desc>
+                  <constraint>
+                     <sch:rule context="tei:editorialDecl[empty(@copyOf)]">
+                        <sch:assert test="element()">
+                           tei:editorialDecl must have children when @copyOf is not used.
+                        </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+            </elementSpec>
+            
+            <elementSpec ident="projectDesc" module="header" mode="change">
+               <content>
+                  <!-- allow empty if @copyOf used -->
+                  <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
+               </content>
+               <constraintSpec ident="projectDesc-nonempty" scheme="schematron" mode="add">
+                  <desc>
+                     <gi>projectDesc</gi> must have content unless <att>copyOf</att> is used.</desc>
+                  <constraint>
+                     <sch:rule context="tei:projectDesc[empty(@copyOf)]">
+                        <sch:assert test="element()">
+                           tei:projectDesc must have children when @copyOf is not used.
+                        </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+            </elementSpec>
+            
+            <elementSpec ident="listPrefixDef" module="header" mode="change">
+               <content>
+                  <!-- allow empty if @copyOf used -->
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                     <elementRef key="prefixDef"/>
+                     <elementRef key="listPrefixDef"/>
+                  </alternate>
+               </content>
+               <constraintSpec ident="listPrefixDef-nonempty" scheme="schematron" mode="add">
+                  <desc>
+                     <gi>listPrefixDef</gi> must have content unless <att>copyOf</att> is used.</desc>
+                  <constraint>
+                     <sch:rule context="tei:listPrefixDef[empty(@copyOf)]">
+                        <sch:assert test="element()">
+                           tei:listPrefixDef must have children when @copyOf is not used.
+                        </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+            </elementSpec>
+            
+            <elementSpec ident="fileDesc" mode="change">
+               <attList>
+                  <attDef ident="n" mode="delete"/>
+                  <attDef ident="style" mode="delete"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+               </attList>
+            </elementSpec>
+
+
+            <elementSpec ident="titleStmt" mode="change">
+               <attList>
+                  <attDef ident="n" mode="delete"/>
+                  <attDef ident="style" mode="delete"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+               </attList>
+            </elementSpec>
+            
+            <elementSpec ident="revisionDesc" mode="change">
+               <attList>
+                  <attDef ident="n" mode="delete"/> 
+                 <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+               </attList>
+            </elementSpec>
+            
+            
+            <!--Constrain change to having just who and when-->
+            <elementSpec ident="change" mode="change">
+               <attList>
+                  <attDef ident="who" mode="change" usage="req"/>
+                  <attDef ident="when" mode="change" usage="req"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="style" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="cert" mode="delete"/>
+                  <attDef ident="resp" mode="delete"/>
+                  <attDef ident="source" mode="delete"/>
+                  <attDef ident="type" mode="delete"/>
+                  <attDef ident="subtype" mode="delete"/>
+               </attList>
+            </elementSpec>
+            
+            <!--Profile desc can only have particDescs or textClasses-->
+            <elementSpec ident="profileDesc" mode="change">
+               <content>
+                     <elementRef key="particDesc" minOccurs="0" maxOccurs="unbounded"/>
+                     <elementRef key="textClass" minOccurs="1" maxOccurs="unbounded"/>
+               </content>
+               <attList>
+                  <attDef ident="n" mode="delete"/> 
+                 <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+               </attList>
+            </elementSpec>
+            
+            <!--  Modify textClass so that it's no longer a member of model.profileDescPart, 
+        because it's now hard-coded as a mandatory child of profileDesc. 
+-->
+            <elementSpec ident="textClass" mode="change">
+               <classes>
+                  <memberOf key="att.global"/>
+                  <memberOf key="att.declarable"/>
+               </classes>
+               <!--  Also, make catRef mandatory in textClass, and remove 
+        classCode and keywords. 
+-->
+               <content>
+                     <elementRef key="catRef" minOccurs="1" maxOccurs="unbounded"/>
+               </content>
+               <attList>
+                  <attDef ident="n" mode="delete"/> 
+                 <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+               </attList>
+            </elementSpec>
+
+
+     
+            <elementSpec ident="catRef" mode="change">
+
+               <attList>
+                  <attDef ident="cert" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="n" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/> 
+                 <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="resp" mode="delete"/>
+                  <attDef ident="style" mode="delete"/>
+                  <attDef ident="scheme" mode="change" usage="req">
+                     <valList type="closed" mode="add">
+                        <valItem ident="idt:iseApocrypha">
+                           <gloss>Taxonomy of apocrypha</gloss>
+                           <desc>Works incorrectly attributed to Shakespeare.</desc>
+                        </valItem>
+                        <valItem ident="idt:iseWorks">
+                           <gloss>Taxonomy of Shakespeare's works</gloss>
+                           <desc>Works of primary interest to the ISE</desc>
+                        </valItem>
+                        <valItem ident="idt:iseDocumentTypes">
+                           <gloss>Taxonomy of document types</gloss>
+                        </valItem>
+                        <valItem ident="idt:iseDocumentFlags"/>
+                     </valList>
+                  </attDef>
+                  <attDef ident="target" mode="change" usage="req">
+                     
+                     <valList type="closed" mode="change">
+                        <valItem ident="idt:idtAbout" mode="add">
+                           <desc>Documents that describe the Internet Shakespeare Editions
+                     project.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtAboutAcknowledge" mode="add">
+                           <desc>Documents that contain acknowledgments to contributors, insitutional
+                        and personal friends, and other parties.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtAboutLegal" mode="add">
+                           <desc>Documents regarding copyright, etc.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtAboutOrg" mode="add">
+                           <desc>Documents related to the ISE as non-profit organizaton.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtAnthology" mode="add">
+                           <desc>A collection of related primary sources.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtApparatus" mode="add">
+                           <desc>Stand-off file used to augment another document.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtBornDigital" mode="add">
+                           <desc>Documents not based on a primary source.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtBroadview" mode="add">
+                           <desc>Also published by Broadview Press.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDatabase" mode="add">
+                           <desc>A centralised collection of items used across the site.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDatabaseBibliography" mode="add">
+                           <desc>The centralized bibliography for the ISE.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDatabasePersonography" mode="add">
+                           <desc>A collection of people.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDatabaseWorks" mode="add">
+                           <desc>List of works of primary interest to the project.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDocumentation" mode="add">
+                           <desc>Documents related to the documentation of the ISE.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDocumentationEncoding" mode="add">
+                           <desc>Documentation about the ISE's specific encoding practices.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDocumentationHelp" mode="add">
+                           <desc>Documentation for navigating and using the ISE.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtDocumentationTechnical" mode="add">
+                           <desc>Technical documentation about the ISE's platform.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtEdition" mode="add">
+                           <desc>An ISE/DRE/QME edition.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtExcerpted" mode="add">
+                           <desc>Contains selections or segments of primary sources that have not been transcribed in full.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimile" mode="add">
+                           <desc>A material copy of a text.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileFOLI1" mode="add">
+                           <desc>Facsimiles of <ref target="bibl:FOLI1">Shakespeare's First Folio</ref>.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileFOLI2" mode="add">
+                           <desc>Facsimiles of <ref target="bibl:FOLI2">Shakespeare's Second Folio</ref>.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileFOLI3" mode="add">
+                           <desc>Facsimiles of <ref target="bibl:FOLI3">Shakespeare's Third Folio</ref>.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileFOLI4" mode="add">
+                           <desc>Facsimiles of <ref target="bibl:FOLI4">Shakespeare's Fourth Folio</ref>.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileFolio" mode="add">
+                           <desc>Facsimiles in folio format.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileManuscript" mode="add">
+                           <desc>Facsimile of a hand-written document.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileOctavo" mode="add">
+                           <desc>Facsimiles in octavo format.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtFacsimileQuarto" mode="add">
+                           <desc>Facsimiles in quarto format.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtGenerated" mode="add">
+                           <desc>Documents generated by an automated process.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtLanding" mode="add">
+                           <desc>A page for orienting the user that contains links to other
+                     documents.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatext" mode="add">
+                           <desc>Documents that are supplementary to an mdtPrimary document.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextBibl" mode="add">
+                           <desc>A document created for an edition by an editor that lists specific
+                        resources. May or may not be annotated.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextCharacters" mode="add">
+                           <desc>Documents that list dramatic personae or other lists of literary
+                        characters.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextChronology" mode="add">
+                           <desc>Documents that list dates and times relating to a primary
+                        source.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextContextual" mode="add">
+                           <desc>Contextual information for supplementing an edition.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextCrit" mode="add">
+                           <desc>Documents created for an edition that offer some critical purchase on
+                        a play.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextCritIntro" mode="add">
+                           <desc>A document created for an edition that offers a critical
+                           introduction to the play.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextGloss" mode="add">
+                           <desc>Documents that contain glossary-like entries that supplement specific
+                        editions.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextHist" mode="add">
+                           <desc>Documents that give historical overviews of aspects of the
+                        play.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextHistCrit" mode="add">
+                           <desc>A document created for an edition that offers a history of
+                           criticism on the play.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextHistPerf" mode="add">
+                           <desc>A document created for an edition that offers a history of the play
+                           in performance.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextHistText" mode="add">
+                           <desc>A document created for an edition that offers a textual history of
+                           the play.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextNotes" mode="add">
+                           <desc>Documents that are level 3 notes
+                        <!--JT>MT: What does this mean?--></desc>
+                        </valItem>
+                        <valItem ident="idt:idtParatextPedagogical" mode="add">
+                           <desc>Documents that offer teaching notes, assignments, or other pedagogical engagements with an edition or text.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtPeerReviewed" mode="add">
+                           <desc>Document has been peer reviewed.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtPrimary" mode="add">
+                           <desc>A digital edition of a primary source document (do not combine with
+                     "idtBornDigital")</desc>
+                        </valItem>
+                        <valItem ident="idt:idtPrimaryModern" mode="add">
+                           <desc>A modernized version of a primary source.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtPrimaryPlay" mode="add">
+                           <desc>A primary source document that is conventionally considered a
+                        play.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtPrimaryPoem" mode="add">
+                           <desc>A primary source document that is conventionally considered a
+                        poem.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtPrimaryProse" mode="add">
+                           <desc>A primary source document that is conventionally considered
+                        non-dramatic prose.</desc>
+                        </valItem>
+                        <valItem ident="idt:idtUnderReview" mode="add">
+                           <desc>Document is currently undergoing peer review.</desc>
+                        </valItem>
+                        <valItem ident="idt:ise1H4" mode="add">
+                           <desc>The First Part of King Henry the Fourth</desc>
+                        </valItem>
+                        <valItem ident="idt:ise1H6" mode="add">
+                           <desc>The First Part of King Henry the Sixth</desc>
+                        </valItem>
+                        <valItem ident="idt:ise2H4" mode="add">
+                           <desc>The Second Part of King Henry the Fourth</desc>
+                        </valItem>
+                        <valItem ident="idt:ise2H6" mode="add">
+                           <desc>The Second Part of King Henry the Sixth</desc>
+                        </valItem>
+                        <valItem ident="idt:ise3H6" mode="add">
+                           <desc>The Third Part of King Henry the Sixth</desc>
+                        </valItem>
+                        <valItem ident="idt:iseAWW" mode="add">
+                           <desc>All's Well That Ends Well</desc>
+                        </valItem>
+                        <valItem ident="idt:iseAYL" mode="add">
+                           <desc>As You Like It</desc>
+                        </valItem>
+                        <valItem ident="idt:iseAdo" mode="add">
+                           <desc>Much Ado About Nothing</desc>
+                        </valItem>
+                        <valItem ident="idt:iseAnt" mode="add">
+                           <desc>Antony and Cleopatra</desc>
+                        </valItem>
+                        <valItem ident="idt:iseCor" mode="add">
+                           <desc>Coriolanus</desc>
+                        </valItem>
+                        <valItem ident="idt:iseCro" mode="add">
+                           <desc>Thomas Lord Cromwell</desc>
+                        </valItem>
+                        <valItem ident="idt:iseCym" mode="add">
+                           <desc>Cymbeline</desc>
+                        </valItem>
+                        <valItem ident="idt:iseEdw" mode="add">
+                           <desc>Edward III</desc>
+                        </valItem>
+                        <valItem ident="idt:iseErr" mode="add">
+                           <desc>The Comedy of Errors</desc>
+                        </valItem>
+                        <valItem ident="idt:iseH5" mode="add">
+                           <desc>King Henry the Fifth</desc>
+                        </valItem>
+                        <valItem ident="idt:iseH8" mode="add">
+                           <desc>King Henry the Eighth</desc>
+                        </valItem>
+                        <valItem ident="idt:iseHam" mode="add">
+                           <desc>Hamlet</desc>
+                        </valItem>
+                        <valItem ident="idt:iseJC" mode="add">
+                           <desc>Julius Caesar</desc>
+                        </valItem>
+                        <valItem ident="idt:iseJn" mode="add">
+                           <desc>King John</desc>
+                        </valItem>
+                        <valItem ident="idt:iseLC" mode="add">
+                           <desc>A Lover's Complaint</desc>
+                        </valItem>
+                        <valItem ident="idt:iseLLL" mode="add">
+                           <desc>Love's Labour's Lost</desc>
+                        </valItem>
+                        <valItem ident="idt:iseLP" mode="add">
+                           <desc>The London Prodigal</desc>
+                        </valItem>
+                        <valItem ident="idt:iseLoc" mode="add">
+                           <desc>The Tragedy of Locrine</desc>
+                        </valItem>
+                        <valItem ident="idt:iseLr" mode="add">
+                           <desc>King Lear</desc>
+                        </valItem>
+                        <valItem ident="idt:iseLuc" mode="add">
+                           <desc>The Rape of Lucrece</desc>
+                        </valItem>
+                        <valItem ident="idt:iseMM" mode="add">
+                           <desc>Measure for Measure</desc>
+                        </valItem>
+                        <valItem ident="idt:iseMND" mode="add">
+                           <desc>A Midsummer Night's Dream</desc>
+                        </valItem>
+                        <valItem ident="idt:iseMV" mode="add">
+                           <desc>The Merchant of Venice</desc>
+                        </valItem>
+                        <valItem ident="idt:iseMac" mode="add">
+                           <desc>Macbeth</desc>
+                        </valItem>
+                        <valItem ident="idt:iseOld" mode="add">
+                           <desc>The History of Sir John Oldcastle</desc>
+                        </valItem>
+                        <valItem ident="idt:iseOth" mode="add">
+                           <desc>Othello</desc>
+                        </valItem>
+                        <valItem ident="idt:isePP" mode="add">
+                           <desc>The Passionate Pilgrim</desc>
+                        </valItem>
+                        <valItem ident="idt:isePer" mode="add">
+                           <desc>Pericles</desc>
+                        </valItem>
+                        <valItem ident="idt:isePhT" mode="add">
+                           <desc>The Phoenix and Turtle</desc>
+                        </valItem>
+                        <valItem ident="idt:isePur" mode="add">
+                           <desc>The Puritan</desc>
+                        </valItem>
+                        <valItem ident="idt:iseR2" mode="add">
+                           <desc>King Richard the Second</desc>
+                        </valItem>
+                        <valItem ident="idt:iseR3" mode="add">
+                           <desc>King Richard the Third</desc>
+                        </valItem>
+                        <valItem ident="idt:iseRom" mode="add">
+                           <desc>Romeo and Juliet</desc>
+                        </valItem>
+                        <valItem ident="idt:iseSTM" mode="add">
+                           <desc>Sir Thomas More</desc>
+                        </valItem>
+                        <valItem ident="idt:iseShr" mode="add">
+                           <desc>The Taming of the Shrew</desc>
+                        </valItem>
+                        <valItem ident="idt:iseSon" mode="add">
+                           <desc>Sonnets</desc>
+                        </valItem>
+                        <valItem ident="idt:iseTGV" mode="add">
+                           <desc>The Two Gentlemen of Verona</desc>
+                        </valItem>
+                        <valItem ident="idt:iseTN" mode="add">
+                           <desc>Twelfth Night</desc>
+                        </valItem>
+                        <valItem ident="idt:iseTNK" mode="add">
+                           <desc>The Two Noble Kinsmen</desc>
+                        </valItem>
+                        <valItem ident="idt:iseTim" mode="add">
+                           <desc>Timon of Athens</desc>
+                        </valItem>
+                        <valItem ident="idt:iseTit" mode="add">
+                           <desc>Titus Andronicus</desc>
+                        </valItem>
+                        <valItem ident="idt:iseTmp" mode="add">
+                           <desc>The Tempest</desc>
+                        </valItem>
+                        <valItem ident="idt:iseTro" mode="add">
+                           <desc>Troilus and Cressida</desc>
+                        </valItem>
+                        <valItem ident="idt:iseVen" mode="add">
+                           <desc>Venus and Adonis</desc>
+                        </valItem>
+                        <valItem ident="idt:iseWT" mode="add">
+                           <desc>The Winter's Tale</desc>
+                        </valItem>
+                        <valItem ident="idt:iseWiv" mode="add">
+                           <desc>The Merry Wives of Windsor</desc>
+                        </valItem>
+                        <valItem ident="idt:iseYrk" mode="add">
+                           <desc>A Yorkshire Tragedy</desc>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+            </elementSpec>
+
+            <!--MODULE: ISO-FS -->
+            <!-- used by facsimiles -->
+            <moduleRef key="iso-fs" include="f fs numeric"/>
+
+            <!--MODULE: LINKING-->
+            <moduleRef key="linking" include="ab anchor seg"/>
+            <classSpec ident="att.global.linking"
+                       module="linking"
+                       mode="change"
+                       type="atts">
+               <attList>
+                  <attDef ident="synch" mode="delete"/>
+                  <attDef ident="exclude" mode="delete"/>
+                  <attDef ident="select" mode="delete"/>
+               </attList>
+            </classSpec>
+            
+            <elementSpec ident="seg" module="linking" mode="change">
+               <attList>
+                  <attDef ident="part" mode="delete"/>
+                  
+               </attList>
+            </elementSpec>
+
+            <!--MODULE: MSDESCRIPTION-->
+            <!-- used by facsimile sourceDesc -->
+            <moduleRef key="msdescription"
+                       include="institution locus msContents msDesc msIdentifier msItem msName objectDesc physDesc repository"/>
+
+            <!--MODULE: NAMESDATES-->
+            <!-- facsimiles using settlement, country -->
+            <moduleRef key="namesdates"
+                       include="addName country forename listOrg listPerson persName person settlement surname org orgName"/>
+            <classSpec ident="att.datable.iso"
+                       type="atts"
+                       module="namesdates"
+                       mode="delete"/>
+            
+            <!--We currently do not need custom date attributes-->
+            <classSpec ident="att.datable.custom"
+                       type="atts"
+                       module="namesdates"
+                       mode="delete"/>
+
+            <moduleRef key="tagdocs" include="att code egXML gi val ident"/>
+            <elementSpec ident="egXML" module="tagdocs" mode="change">
+               <attList> 
+                 <attDef ident="style" mode="delete"/>
+                  <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="resp" mode="delete"/>
+                  <attDef ident="cert" mode="delete"/>
+                  <attDef ident="source" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <!--Need to know validity of the EGXML-->
+                  <attDef ident="valid" mode="change" usage="req"/>
+               </attList>
+            </elementSpec>
+
+            <!--MODULE: TEI-->
+            <moduleRef key="tei"/>
+            <classSpec type="atts" module="tei" ident="att.canonical" mode="change">
+               <attList>
+                  <attDef ident="key" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.ranging" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.written" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.cReferencing" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.datable" module="tei" type="atts" mode="change">
+               <attList>
+                  <attDef ident="period" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.datcat" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.declarable" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.declaring" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.divLike" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.docStatus" module="tei" type="atts" mode="change">
+               <attList>
+                  <attDef ident="status" mode="change">
+                     <valList>
+                        <valItem ident="converted">
+                           <gloss>This document was converted to TEI from an older format by a conversion script and has not yet been touched by a human.</gloss>
+                        </valItem>
+                        <valItem ident="draft">
+                           <gloss>This document is currently being edited. It is not ready for publication or peer-review.</gloss>
+                        </valItem>
+                        <valItem ident="published">
+                           <gloss>This document is ready to be published.</gloss>
+                        </valItem>
+                        <valItem ident="deprecated">
+                           <gloss>This document is no longer relevant, but is being preserved for archival purposes.</gloss>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.duration.w3c" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.duration.iso" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.editLike" module="tei" type="atts" mode="change">
+               <attList>
+                  <attDef ident="instant" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.global" module="tei" type="atts" mode="change">
+               <attList>
+                  <attDef ident="xml:base" mode="delete"/>
+                  <attDef ident="xml:space" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.handFeatures" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.interpLike" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.measurement" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.naming" module="tei" type="atts" mode="change">
+               <attList>
+                  <attDef ident="nymRef" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.notation" module="tei" type="atts" mode="delete"/>
+            <classSpec ident="att.pointing" module="tei" type="atts" mode="change">
+               <attList>
+                  <attDef ident="targetLang" mode="delete"/>
+                  <attDef ident="evaluate" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.pointingGroup"
+                       module="tei"
+                       type="atts"
+                       mode="delete"/>
+            <classSpec ident="att.scoping" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.segLike" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.sortable" module="tei" type="atts" mode="delete"/>
+           <!-- <classSpec ident="att.edition" module="tei" type="atts" mode="delete"/>-->
+            <classSpec ident="att.readFrom" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.spanning" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.repeatable" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.timed" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.transcriptional"
+                       type="atts"
+                       module="tei"
+                       mode="delete"/>
+            <classSpec ident="att.translatable" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.citing" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.partials" type="atts" module="tei" mode="delete"/>
+            <classSpec ident="att.personal" type="atts" module="tei" mode="change">
+               <attList>
+                  <attDef ident="full" mode="delete"/>
+                  <attDef ident="sort" mode="delete"/>
+               </attList>
+            </classSpec>
+
+
+            <classSpec ident="att.global.analytic"
+                       type="atts"
+                       module="tei"
+                       mode="delete"/>
+            <classSpec ident="att.pointing.group"
+                       type="atts"
+                       module="tei"
+                       mode="delete"/>
+
+
+
+
+
+
+            <!--MODULE: TEXTCRIT-->
+            <moduleRef key="textcrit" include="app lem listApp listWit rdg wit witness"/>
+            <classSpec ident="att.textCritical"
+                       module="textcrit"
+                       type="atts"
+                       mode="change">
+               <attList>
+                  <attDef ident="cause" mode="delete"/>
+                  <attDef ident="varSeq" mode="delete"/>
+                  <attDef ident="require" mode="delete"/>
+               </attList>
+            </classSpec>
+            
+            <!--Make @wit mandatory in rdg-->
+            
+            <elementSpec ident="rdg" module="textcrit" mode="change">
+               <attList> 
+                 <attDef ident="style" mode="delete"/>
+                  <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="change" mode="delete"/>
+                  <attDef ident="hand" mode="delete"/>
+                  <attDef ident="wit" usage="req" mode="change"/>
+                  <attDef ident="type" usage="opt" mode="change">
+                     <valList>
+                        <valItem ident="substantive">
+                           <gloss>A substantive reading.</gloss>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+            </elementSpec>
+            
+            <!--Heavily constrain lem-->            
+            <elementSpec ident="lem" module="textcrit" mode="change">
+               <content>
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                     <textNode/>
+                     <elementRef key="gap" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="note" minOccurs="0" maxOccurs="unbounded"/>
+                     <elementRef key="lb" minOccurs="0" maxOccurs="unbounded"/>
+                  </alternate>
+               </content>
+            </elementSpec>
+            
+            <!--Make @from mandatory on apps and spans-->
+            
+            <elementSpec ident="app" module="textcrit" mode="change">
+               <attList>
+                  <attDef ident="corresp" mode="delete"/>
+                  <attDef ident="facs" mode="delete"/>
+                  <attDef ident="next" mode="delete"/>
+                  <attDef ident="prev" mode="delete"/> 
+                  <attDef ident="rendition" mode="delete"/>
+                  <attDef ident="style" mode="delete"/>
+                  <attDef ident="loc" mode="delete"/>
+                  <attDef ident="from" mode="change" usage="req"/>
+                  <attDef ident="type" mode="change">
+                    <valList mode="change">
+                       <valItem ident="relineation">
+                          <gloss>relineation</gloss>
+                          <desc>a collation that records relineation</desc>
+                       </valItem>
+                    </valList>
+                  </attDef>
+               </attList>
+            </elementSpec>
+            
+            <elementSpec ident="span" module="analysis" mode="change">
+               <attList>
+                  <attDef ident="from" mode="change" usage="req"/>
+               </attList>
+            </elementSpec>
+
+
+
+            <!--MODULE: TEXTSTRUCTURE-->
+            <moduleRef key="textstructure"
+                       include="TEI back body byline closer dateline div docAuthor docDate docEdition docImprint docTitle front group opener text titlePage titlePart trailer"/>
+            
+            <!--MODULE: TRANSCR-->
+            <!--sourceDoc and surface are used by facsimiles-->
+            <moduleRef key="transcr" include="fw space supplied sourceDoc surface"/>
+            <classSpec ident="att.global.change"
+                       type="atts"
+                       module="transcr"
+                       mode="delete"/>
+            <classSpec ident="att.coordinated"
+                       type="atts"
+                       module="transcr"
+                       mode="delete"/>
+          
+          
+            <!--Global attributes-->
+            
+            <classSpec module="tei"
+                       ident="att.global.responsibility"
+                       mode="change"
+                       type="atts">
+               <attList>
+                  <attDef ident="cert" mode="change">
+                     <datatype>
+                        <dataRef key="teidata.certainty"/>
+                     </datatype>
+                  </attDef>
+               </attList>
+            </classSpec>
+            
+            <classSpec module="tei"
+                       ident="att.global.rendition"
+                       mode="change"
+                       type="atts">
+               <attList>
+                  <!--We can't get rid of @rend yet. But we will
+                     look for it in diagnostics and get rid of it soon enough-->
+                  <attDef ident="rend" mode="change">
+                     <desc>[DEPRECATED: DO NOT USE] indicates how the element in question was rendered or presented in the source text.</desc>
+                  </attDef>
+                  <attDef ident="rendition" mode="change">
+                     <valList mode="change" type="semi">
+                        <valItem ident="rend:subscript" mode="add">
+                           <gloss>subscript</gloss>
+                        </valItem>
+                        <valItem ident="rend:superscript" mode="add">
+                           <gloss>superscript</gloss>
+                        </valItem>
+                        <valItem ident="rend:right" mode="add">
+                           <gloss>right</gloss>
+                        </valItem>
+                        <valItem ident="rend:centre" mode="add">
+                           <gloss>centre</gloss>
+                        </valItem>
+                        <valItem ident="rend:justify" mode="add">
+                           <gloss>justify</gloss>
+                        </valItem>
+                        <valItem ident="rend:blackletter" mode="add">
+                           <gloss>blackletter</gloss>
+                        </valItem>
+                        <valItem ident="rend:italic" mode="add">
+                           <gloss>italic</gloss>
+                        </valItem>
+                        <valItem ident="rend:normalstyle" mode="add">
+                           <gloss>normalstyle</gloss>
+                        </valItem>
+                        <valItem ident="rend:letterspace" mode="add">
+                           <gloss>letterspace</gloss>
+                        </valItem>
+                        <valItem ident="rend:smallcaps" mode="add">
+                           <gloss>smallcaps</gloss>
+                        </valItem>
+                        <valItem ident="rend:xx-small" mode="add">
+                           <gloss>xx-small</gloss>
+                        </valItem>
+                        <valItem ident="rend:x-small" mode="add">
+                           <gloss>x-small</gloss>
+                        </valItem>
+                        <valItem ident="rend:small" mode="add">
+                           <gloss>small</gloss>
+                        </valItem>
+                        <valItem ident="rend:medium" mode="add">
+                           <gloss>medium</gloss>
+                        </valItem>
+                        <valItem ident="rend:large" mode="add">
+                           <gloss>large</gloss>
+                        </valItem>
+                        <valItem ident="rend:x-large" mode="add">
+                           <gloss>x-large</gloss>
+                        </valItem>
+                        <valItem ident="rend:xx-large" mode="add">
+                           <gloss>xx-large</gloss>
+                        </valItem>
+                        <valItem ident="rend:ligature" mode="add">
+                           <gloss>ligature</gloss>
+                        </valItem>
+                     </valList>
+                  </attDef>
+               </attList>
+               
+            </classSpec>
+
+
+
+
+
+         </schemaSpec>
+      </body>
+   </text>
+</TEI>
